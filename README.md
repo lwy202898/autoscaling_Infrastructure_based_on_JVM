@@ -1,6 +1,6 @@
 # autoscaling_Infrastructure_based_on_JVM
 
-**1. The overview design of the system**
+## 1. The overview design of the system
 
 In this project, we have five types of VMs, that is the Master, Frond-Tier VMs, Middle-Tier VMs, the Cache and the Database.
 
@@ -18,7 +18,7 @@ For every specific time period, the master will check the front queue length and
 
 According the this we could decide whether to scale out or scale in the front-tier or middle-tier VMs. In addition, for middle-tier servers, every time it gets null request, it means it is idle. It will check the idle time at the same time to see how long it is. If it is too long, it will shut down itself, which makes it scale in more efficiently. For the master, in every loop, it will check the waiting period of each requests in the queue, if the time is too long, it will drop it so to make the later requests happy.
 
-**2. Scaling Policy**
+## 2. Scaling Policy
 
 Middle Scale Out: I compare the total size of requests with total number of middle machines, I divide them and get the middle load, if it exceeds middle\_load\_max which is a parameter we can tune, then we scale out. Them number of VMs to scale out is dependent by a scale factor multiplied by the middle load, if the load is too heavier, I scale more otherwise I scale less.
 
@@ -26,11 +26,11 @@ Middle Scale In: There are two ways to scale in the middle, one is to check the 
 
 Front Scale Out and Front Scale In: The total size of requests with total number of front machines are also compared as what I did in the middle, but for the front, I calculate the average number of requests per machine. I have two parameters that is the average number of max front requests and average number of min front requests. If the calculated result exceeds the average number of max front requests, I scale out. If the calculated result is less than the average number of min front requests, I scale in.
 
-**3. The design of Cache**
+## 3. The design of Cache
 
 I implemented the databaseOps object which implements the cache. When the simulation start, the master will initialize this object, and the object will get the database object to access later. When get requests come, it will check the requests and use cache to process it. For other requests, it simply transfer it to database part.
 
-**4. Other detail design of the system**
+## 4. Other detail design of the system
 
 In this system, I measured the beginning arrival rate of the requests, according to the beginning arrival rate, I used different configuration of parameters. This intelligent pattern match increased the efficiency of the total system.
 
