@@ -1,4 +1,4 @@
-# autoscaling_Infrastructure_based_on_JVM
+# autoscaling_Infrastructure_based_on_VM
 
 ## 1. The overview design of the system
 
